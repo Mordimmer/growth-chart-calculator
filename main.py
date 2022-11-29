@@ -2,6 +2,7 @@ import tkinter as tk
 # TODO
 # Zmenić tło przycisków
 # Sprawdzić, czy dane są poprawne
+# Dodać wartości przerzucane do pliku
 
 main = tk.Tk()
 main.title("Kalkulator centylowy")
