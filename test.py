@@ -1,15 +1,9 @@
-import tkinter as tk
+import numpy as np
+import matplotlib.pyplot as plt
 
-my_window = tk.Tk()
-my_window.title("Demo")
-my_window.geometry("300x300")
+# evenly sampled time at 200ms intervals
+t = np.arange(0., 5., 0.2)
 
-
-def change_text():
-    my_button["text"] = "I've been clicked!"
-    my_button['state'] = 'disabled'
-
-
-my_button = tk.Button(my_window, text="Submit", command=change_text)
-my_button.pack()
-my_window.mainloop()
+# red dashes, blue squares and green triangles
+plt.plot(t, t, 'r', t, t ** 2, 'b', t, t ** 3, 'r')
+plt.show()
