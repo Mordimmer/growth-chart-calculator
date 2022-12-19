@@ -28,3 +28,8 @@ wykresy, obrazujące fizyczny rozwój dzieci, w zależności od płci i wieku mo
 * Interfejs pozwalający na edytowanie poprzednich rekordów
 * Możliwość gromadzenia danych kilku dzieci
 * Podłączenie do prawdziwej bazy danych
+
+# Wykorzystywane biblioteki:
+* tkinter
+* matplotlib
+* numpy

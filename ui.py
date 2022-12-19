@@ -167,9 +167,6 @@ def display_data():
                                                                                         pady=10)
 
 
-# display_data()
-
-
 # draw simple plot in main window
 def draw_plot():
     # read data from file
@@ -198,30 +195,48 @@ def draw_plot():
         head.append(int(data_list[i][4]))
 
     # create 3 plots
-    fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(5, 5))
+    fig = plt.figure()
+    ax1 = fig.add_subplot(311)
+    ax2 = fig.add_subplot(312)
+    ax3 = fig.add_subplot(313)
 
     # plot age and height
     ax1.plot(age, height, color="blue")
+    ax1.grid(linestyle="--")
     ax1.set_title("Wzrost")
     ax1.set_xlabel("Wiek [miesiące]")
     ax1.set_ylabel("Wzrost [cm]")
 
     # plot age and weight
     ax2.plot(age, weight, color="red")
+    ax2.grid(linestyle="--")
     ax2.set_title("Waga")
     ax2.set_xlabel("Wiek [miesiące]")
     ax2.set_ylabel("Waga [kg]")
 
     # plot age and head circumference
     ax3.plot(age, head, color="green")
+    ax3.grid(linestyle="--")
     ax3.set_title("Obwód głowy")
     ax3.set_xlabel("Wiek [miesiące]")
     ax3.set_ylabel("Obwód głowy [cm]")
 
-    # draw figure
-    canvas = FigureCanvasTkAgg(fig, main)
+    # improve layout
+    plt.tight_layout()
+    # increase plot height
+    fig.set_figheight(8)
+    # decrease plot width
+    fig.set_figwidth(5)
+    # decrease space between plots
+    fig.subplots_adjust(hspace=0.5)
+
+    # make fig background same color as main window
+    fig.patch.set_facecolor('#FFCC99')
+
+    # draw canvas on the right side of main window
+    canvas = FigureCanvasTkAgg(fig, master=main)
     canvas.draw()
-    canvas.get_tk_widget().grid(row=0, column=6, rowspan=12, padx=10, pady=10)
+    canvas.get_tk_widget().grid(row=0, column=6, rowspan=20, padx=10, pady=10)
 
 
 draw_plot()
