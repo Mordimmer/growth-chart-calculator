@@ -1,9 +1,7 @@
 import tkinter as tk
 
-import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from matplotlib.figure import Figure
 
 # create main window
 main = tk.Tk()
@@ -66,7 +64,7 @@ def button_click():
             data_list = []
             for i in data:
                 data_list.append(i.split(","))
-            age_input.insert(0, int(data_list[-2][1]) + 1)
+            age_input.insert(0, int(data_list[-1][1]) + 1)
         # disable button after click
         input_button['state'] = 'disabled'
         # hide window after 3 seconds

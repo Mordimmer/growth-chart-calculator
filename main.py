@@ -1,4 +1,3 @@
-import tkinter as tk
 from ui import *
 
 if __name__ == "__main__":
