@@ -234,9 +234,9 @@ def draw_plot():
     fig.patch.set_facecolor('#FFCC99')
 
     # draw canvas on the right side of main window
-    canvas = FigureCanvasTkAgg(fig, master=main)
+    canvas = FigureCanvasTkAgg(fig, main)
     canvas.draw()
-    canvas.get_tk_widget().grid(row=0, column=6, rowspan=20, padx=10, pady=10)
+    canvas.get_tk_widget().grid(row=0, column=6, rowspan=20, padx=300, pady=15)
 
 
 draw_plot()
