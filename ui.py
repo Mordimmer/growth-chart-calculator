@@ -39,7 +39,7 @@ def create_user_interface(main):
         """
         if age_input.get() == "" or height_input.get() == "" or weight_input.get() == "" or head_input.get() == "" \
                 or not is_number(age_input.get()) or not is_number(height_input.get()) or not is_number(
-            weight_input.get()) or not is_number(head_input.get()):
+                weight_input.get()) or not is_number(head_input.get()):
             return True
         else:
             return False
@@ -87,11 +87,11 @@ def create_user_interface(main):
     # button to change butt appending data state to enabled
     change_button_state_button = tk.Button(main, text="Wprowadź kolejne dane", command=change_button_state)
 
-    selected_gender = tk.StringVar()
-
     tk.Label(main, text="Kalkulator centylowy", bg="#FFCC99", font=("Arial", 30)).grid(row=0, column=0, columnspan=2,
                                                                                        padx=10, pady=10)
 
+    # create radio buttons, to select child's gender
+    selected_gender = tk.StringVar()
     tk.Label(main, text="Płeć dziecka:", bg="#FFCC99").grid(row=1, column=0, padx=10, pady=10, columnspan=2)
     tk.Radiobutton(main,
                    text="Dziewczynka",
@@ -114,6 +114,7 @@ def create_user_interface(main):
                                       padx=10,
                                       pady=10)
 
+    # create input fields
     tk.Label(main, text="Wiek [miesiące]:", bg="#FFCC99").grid(row=3, column=0, padx=10, pady=10, columnspan=2)
     age_input = tk.Entry(main)
     age_input.grid(row=4, column=0, padx=10, pady=10, columnspan=2)
@@ -130,6 +131,7 @@ def create_user_interface(main):
     head_input = tk.Entry(main)
     head_input.grid(row=10, column=0, padx=10, pady=10, columnspan=2)
 
+    # create button to append data to file
     input_button = tk.Button(main, text="Zapisz dane", command=button_click)
     input_button.grid(row=11, column=0, padx=10, pady=10, columnspan=2)
 
