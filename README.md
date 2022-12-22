@@ -1,7 +1,5 @@
 # Kalkulator centylowy
 ## Projekt grupowy Politechniki Gdańskiej semestr 5/6
-## Wymagane biblioteki programu python: 
-- tkinter
 
 # Siatki centylowe
 wykresy, obrazujące fizyczny rozwój dzieci, w zależności od płci i wieku mogą uwzględniać różne parametry, takie jak wzrost, masę ciała, ciśnienie krwi, parametr BMI itp. Przy regularnym sprawdzaniu tych cech na siatkach centylowych z ustalonych norm, możemy obserwować czy rozwój dziecka przebiega w prawidłowy sposób.
@@ -32,4 +30,3 @@ wykresy, obrazujące fizyczny rozwój dzieci, w zależności od płci i wieku mo
 # Wykorzystywane biblioteki:
 * tkinter
 * matplotlib
-* numpy
