@@ -27,7 +27,7 @@ def create_user_interface(main):
         """
         Append data to file
         """
-        with open("data.txt", "a") as file:
+        with open("data.csv", "a") as file:
             file.write(
                 f"\n{selected_gender.get()}, {age_input.get()}, {height_input.get()}, {weight_input.get()},"
                 f" {head_input.get()}")
@@ -56,9 +56,9 @@ def create_user_interface(main):
             # hide window after 3 seconds
             main.after(3000, error_label.destroy)
         else:
-            # if age is empty then increase previous age from data.txt file by 1
+            # if age is empty then increase previous age from data.csv file by 1
             if age_input.get() == "":
-                with open("data.txt", "r") as file:
+                with open("data.csv", "r") as file:
                     data = file.read()
                 data = data.split("\n")
                 data_list = []

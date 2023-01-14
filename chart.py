@@ -1,3 +1,5 @@
+import pandas as pd
+
 from matplotlib import pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
@@ -11,32 +13,18 @@ def create_charts(main):
     :param main:
     :return:
     """
-
     def draw_plot():
-        # read data from file
-        with open("data.txt", "r") as file:
-            data = file.read()
 
-        # split data by new line
-        data = data.split("\n")
+        # load data from csv file, and crate lists for each column
+        data = pd.read_csv("data.csv")
+        gender = data.iloc[:, 0]
+        age = data.iloc[:, 1]
+        height = data.iloc[:, 2]
+        weight = data.iloc[:, 3]
+        head = data.iloc[:, 4]
 
-        # create list from provided data
-        data_list = []
-        for i in data:
-            data_list.append(i.split(","))
-
-        # create lists for each
-        age = []
-        height = []
-        weight = []
-        head = []
-
-        # fill lists with data
-        for i in range(len(data_list)):
-            age.append(int(data_list[i][1]))
-            height.append(int(data_list[i][2]))
-            weight.append(int(data_list[i][3]))
-            head.append(int(data_list[i][4]))
+        # converse age to int
+        age = [int(i) for i in age]
 
         # create 3 plots
         # (3, 1, 1) means 3 rows, 1 column, 1st plot
@@ -51,6 +39,9 @@ def create_charts(main):
         ax1.set_title("Wzrost")
         ax1.set_xlabel("Wiek [miesiące]")
         ax1.set_ylabel("Wzrost [cm]")
+        ax1.set_ylim(bottom=0)
+        ax1.yaxis.set_major_locator(plt.MaxNLocator(integer=True))
+        ax1.set_ylim(top=ax1.get_ylim()[1] * 1.2)
 
         # plot age and weight
         ax2.plot(age, weight, color="red")
@@ -58,6 +49,9 @@ def create_charts(main):
         ax2.set_title("Waga")
         ax2.set_xlabel("Wiek [miesiące]")
         ax2.set_ylabel("Waga [kg]")
+        ax2.set_ylim(bottom=0)
+        ax2.yaxis.set_major_locator(plt.MaxNLocator(integer=True))
+        ax2.set_ylim(top=ax2.get_ylim()[1] * 1.2)
 
         # plot age and head circumference
         ax3.plot(age, head, color="green")
@@ -65,6 +59,9 @@ def create_charts(main):
         ax3.set_title("Obwód głowy")
         ax3.set_xlabel("Wiek [miesiące]")
         ax3.set_ylabel("Obwód głowy [cm]")
+        ax3.set_ylim(bottom=0)
+        ax3.yaxis.set_major_locator(plt.MaxNLocator(integer=True))
+        ax3.set_ylim(top=ax3.get_ylim()[1] * 1.2)
 
         # improve layout
         plt.tight_layout()
