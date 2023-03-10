@@ -8,6 +8,7 @@ if __name__ == "__main__":
     Function create_user_interface is in ui.py file, and as an argument it takes main window
     create 
     """
+
     # create main window
     main = tk.Tk()
     main.title("Kalkulator centylowy")

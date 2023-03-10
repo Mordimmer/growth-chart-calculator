@@ -141,3 +141,4 @@ def create_user_interface(main):
     # button to end program
     end_button = tk.Button(main, text="Zakończ", command=main.destroy)
     end_button.grid(row=13, column=0, padx=10, pady=10, columnspan=2)
+

@@ -13,8 +13,8 @@ def create_charts(main):
     :param main:
     :return:
     """
-    def draw_plot():
 
+    def draw_plot():
         # load data from csv file, and crate lists for each column
         data = pd.read_csv("data.csv")
         gender = data.iloc[:, 0]
@@ -25,6 +25,19 @@ def create_charts(main):
 
         # converse age to int
         age = [int(i) for i in age]
+        print(max(age))
+
+        centyle_height = pd.read_csv("centyle/b_height.csv")
+        age_centyl = centyle_height.iloc[:, 0]
+        height_2nd = centyle_height.iloc[:, 1]
+        height_5th = centyle_height.iloc[:, 2]
+        height_10th = centyle_height.iloc[:, 3]
+        height_25th = centyle_height.iloc[:, 4]
+        height_50th = centyle_height.iloc[:, 5]
+        height_75th = centyle_height.iloc[:, 6]
+        height_90th = centyle_height.iloc[:, 7]
+        height_95th = centyle_height.iloc[:, 8]
+        height_98th = centyle_height.iloc[:, 9]
 
         # create 3 plots
         # (3, 1, 1) means 3 rows, 1 column, 1st plot
@@ -33,15 +46,23 @@ def create_charts(main):
         ax2 = fig.add_subplot(312)
         ax3 = fig.add_subplot(313)
 
-        # plot age and height
-        ax1.plot(age, height, color="blue")
+        ax1.plot(age_centyl, height_5th, 'r--', label="5th")
+        ax1.plot(age_centyl, height_25th, 'g--', label="25th")
+        ax1.plot(age_centyl, height_50th, 'b-.', label="50th")
+        ax1.plot(age_centyl, height_75th, 'g--', label="75th")
+        ax1.plot(age_centyl, height_95th, 'r--', label="95th")
+        ax1.plot(age, height, color="black", label="Wzrost")
         ax1.grid(linestyle="--")
+        ax1.set_xlim(left=0)
+        ax1.set_xlim(right=max(age))
+        ax1.set_ylim(bottom=min(height) - 3)
+        ax1.set_ylim(top=max(height) + 3)
         ax1.set_title("Wzrost")
         ax1.set_xlabel("Wiek [miesiące]")
         ax1.set_ylabel("Wzrost [cm]")
-        ax1.set_ylim(bottom=0)
         ax1.yaxis.set_major_locator(plt.MaxNLocator(integer=True))
-        ax1.set_ylim(top=ax1.get_ylim()[1] * 1.2)
+        # show legend next to plot
+        ax1.legend(loc="center left", bbox_to_anchor=(1, 0.5), prop={'size': 8})
 
         # plot age and weight
         ax2.plot(age, weight, color="red")
