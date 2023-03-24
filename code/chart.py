@@ -25,7 +25,6 @@ def create_charts(main):
 
         # converse age to int
         age = [int(i) for i in age]
-        print(max(age))
 
         centyle_height = pd.read_csv("centyle/b_height.csv")
         age_centyl = centyle_height.iloc[:, 0]
