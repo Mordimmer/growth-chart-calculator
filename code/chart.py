@@ -38,6 +38,19 @@ def create_charts(main):
         height_95th = centyle_height.iloc[:, 8]
         height_98th = centyle_height.iloc[:, 9]
 
+
+        centyle_weight = pd.read_csv("centyle/b_weight.csv")
+        age_centyl_weight = centyle_weight.iloc[:, 0]
+        weight_2nd = centyle_weight.iloc[:, 1]
+        weight_5th = centyle_weight.iloc[:, 2]
+        weight_10th = centyle_weight.iloc[:, 3]
+        weight_25th = centyle_weight.iloc[:, 4]
+        weight_50th = centyle_weight.iloc[:, 5]
+        weight_75th = centyle_weight.iloc[:, 6]
+        weight_90th = centyle_weight.iloc[:, 7]
+        weight_95th = centyle_weight.iloc[:, 8]
+        weight_98th = centyle_weight.iloc[:, 9]
+
         # create 3 plots
         # (3, 1, 1) means 3 rows, 1 column, 1st plot
         fig = plt.figure()
@@ -63,15 +76,25 @@ def create_charts(main):
         # show legend next to plot
         ax1.legend(loc="center left", bbox_to_anchor=(1, 0.5), prop={'size': 8})
 
+
         # plot age and weight
-        ax2.plot(age, weight, color="red")
+        ax2.plot(age, weight, color="black", label="Waga")
+        ax2.plot(age_centyl_weight, weight_5th, 'r--', label="5th")
+        ax2.plot(age_centyl_weight, weight_25th, 'g--', label="25th")
+        ax2.plot(age_centyl_weight, weight_50th, 'b-.', label="50th")
+        ax2.plot(age_centyl_weight, weight_75th, 'g--', label="75th")
+        ax2.plot(age_centyl_weight, weight_95th, 'r--', label="95th")
         ax2.grid(linestyle="--")
-        ax2.set_title("Waga")
-        ax2.set_xlabel("Wiek [miesiące]")
+        ax2.set_xlim(left=0)
+        ax2.set_xlim(right=max(age))
+        ax2.set_ylim(bottom=min(weight) - 3)
+        ax2.set_ylim(top=max(weight) + 3)
+        ax2.set_title("Wzrost")
+        ax2.set_xlabel("Wiek [miesiące]:")
         ax2.set_ylabel("Waga [kg]")
-        ax2.set_ylim(bottom=0)
         ax2.yaxis.set_major_locator(plt.MaxNLocator(integer=True))
-        ax2.set_ylim(top=ax2.get_ylim()[1] * 1.2)
+        # show legend next to plot
+        ax2.legend(loc="center left", bbox_to_anchor=(1, 0.5), prop={'size': 8})
 
         # plot age and head circumference
         ax3.plot(age, head, color="green")
