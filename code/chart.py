@@ -26,31 +26,33 @@ def create_charts(main):
         # converse age to int
         age = [int(i) for i in age]
 
-        centyle_height = pd.read_csv("centyle/b_height.csv")
+        if data.tail(1).iloc[0, 0] == "boy":
+            centyle_height = pd.read_csv("centyle/b_height.csv")
+        else:
+            centyle_height = pd.read_csv("centyle/g_height.csv")
         age_centyl = centyle_height.iloc[:, 0]
         height_2nd = centyle_height.iloc[:, 1]
-        height_5th = centyle_height.iloc[:, 2]
-        height_10th = centyle_height.iloc[:, 3]
         height_25th = centyle_height.iloc[:, 4]
         height_50th = centyle_height.iloc[:, 5]
         height_75th = centyle_height.iloc[:, 6]
-        height_90th = centyle_height.iloc[:, 7]
-        height_95th = centyle_height.iloc[:, 8]
         height_98th = centyle_height.iloc[:, 9]
 
-        centyle_weight = pd.read_csv("centyle/b_weight.csv")
+        if data.tail(1).iloc[0, 0] == "boy":
+            centyle_weight = pd.read_csv("centyle/b_weight.csv")
+        else:
+            centyle_weight = pd.read_csv("centyle/g_weight.csv")
+        # print last line contain gender
         age_centyl_weight = centyle_weight.iloc[:, 0]
         weight_2nd = centyle_weight.iloc[:, 1]
-        weight_5th = centyle_weight.iloc[:, 2]
-        weight_10th = centyle_weight.iloc[:, 3]
         weight_25th = centyle_weight.iloc[:, 4]
         weight_50th = centyle_weight.iloc[:, 5]
         weight_75th = centyle_weight.iloc[:, 6]
-        weight_90th = centyle_weight.iloc[:, 7]
-        weight_95th = centyle_weight.iloc[:, 8]
         weight_98th = centyle_weight.iloc[:, 9]
 
-        centyle_headc = pd.read_csv("centyle/b_headc.csv")
+        if data.tail(1).iloc[0, 0] == "boy":
+            centyle_headc = pd.read_csv("centyle/b_headc.csv")
+        else:
+            centyle_headc = pd.read_csv("centyle/g_headc.csv")
         age_centyl_headc = centyle_headc.iloc[:, 0]
         headc_2nd = centyle_headc.iloc[:, 1]
         headc_5th = centyle_headc.iloc[:, 2]
@@ -69,17 +71,17 @@ def create_charts(main):
         ax2 = fig.add_subplot(312)
         ax3 = fig.add_subplot(313)
 
-        ax1.plot(age_centyl, height_5th, 'r--', label="5th")
+        ax1.plot(age_centyl, height_2nd, 'r--', label="2nd")
         ax1.plot(age_centyl, height_25th, 'g--', label="25th")
         ax1.plot(age_centyl, height_50th, 'b-.', label="50th")
         ax1.plot(age_centyl, height_75th, 'g--', label="75th")
-        ax1.plot(age_centyl, height_95th, 'r--', label="95th")
+        ax1.plot(age_centyl, height_98th, 'r--', label="98th")
         ax1.plot(age, height, color="black", label="Wzrost")
         ax1.grid(linestyle="--")
         ax1.set_xlim(left=0)
         ax1.set_xlim(right=max(age))
-        ax1.set_ylim(bottom=min(height) - 3)
-        ax1.set_ylim(top=max(height) + 3)
+        ax1.set_ylim(bottom=min(height) - 0.1*min(height))
+        ax1.set_ylim(top=max(height) + 0.1*max(height))
         ax1.set_title("Wzrost")
         ax1.set_xlabel("Wiek [miesiące]")
         ax1.set_ylabel("Wzrost [cm]")
@@ -89,16 +91,16 @@ def create_charts(main):
 
         # plot age and weight
         ax2.plot(age, weight, color="black", label="Waga")
-        ax2.plot(age_centyl_weight, weight_5th, 'r--', label="5th")
+        ax2.plot(age_centyl_weight, weight_2nd, 'r--', label="2nd")
         ax2.plot(age_centyl_weight, weight_25th, 'g--', label="25th")
         ax2.plot(age_centyl_weight, weight_50th, 'b-.', label="50th")
         ax2.plot(age_centyl_weight, weight_75th, 'g--', label="75th")
-        ax2.plot(age_centyl_weight, weight_95th, 'r--', label="95th")
+        ax2.plot(age_centyl_weight, weight_98th, 'r--', label="98th")
         ax2.grid(linestyle="--")
         ax2.set_xlim(left=0)
         ax2.set_xlim(right=max(age))
-        ax2.set_ylim(bottom=min(weight) - 3)
-        ax2.set_ylim(top=max(weight) + 3)
+        ax2.set_ylim(bottom=min(weight) - 0.1*min(weight))
+        ax2.set_ylim(top=max(weight) + 0.1*max(weight))
         ax2.set_title("Waga")
         ax2.set_xlabel("Wiek [miesiące]:")
         ax2.set_ylabel("Waga [kg]")
@@ -108,18 +110,22 @@ def create_charts(main):
 
         # plot age and head circumference
         ax3.plot(age, head, color="black", label="Obwód głowy")
-        ax3.plot(age_centyl_headc, headc_5th, 'r--', label="5th")
+        ax3.plot(age_centyl_headc, headc_2nd, 'r--', label="2nd")
         ax3.plot(age_centyl_headc, headc_25th, 'g--', label="25th")
         ax3.plot(age_centyl_headc, headc_50th, 'b-.', label="50th")
         ax3.plot(age_centyl_headc, headc_75th, 'g--', label="75th")
-        ax3.plot(age_centyl_headc, headc_95th, 'r--', label="95th")
+        ax3.plot(age_centyl_headc, headc_98th, 'r--', label="98th")
         ax3.grid(linestyle="--")
         ax3.set_xlim(left=0)
-        ax3.set_xlim(right=max(age))
-        ax3.set_ylim(bottom=min(head) - 3)
-        ax3.set_ylim(top=max(head) + 3)
+        if max(age) < 24:
+            ax3.set_xlim(right=max(age))
+            ax3.set_xlabel("Wiek [miesiące]:")
+        else:
+            ax3.set_xlim(right=24)
+            # change x axis label
+            ax3.set_xlabel("Wiek [miesiące]\n(nie liczony powyżej 2 roku życia)")
+
         ax3.set_title("Obwód głowy")
-        ax3.set_xlabel("Wiek [miesiące]:")
         ax3.set_ylabel("Obwód głowy [cm]")
         ax3.yaxis.set_major_locator(plt.MaxNLocator(integer=True))
         # show legend next to plot
