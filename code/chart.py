@@ -131,6 +131,8 @@ def create_charts(main):
         # show legend next to plot
         ax3.legend(loc="center left", bbox_to_anchor=(1, 0.5), prop={'size': 8})
 
+        #Test 1 2 3, sprawdzamy
+
         # improve layout
         plt.tight_layout()
         # increase plot height
