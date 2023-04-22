@@ -131,16 +131,6 @@ def create_charts(main):
         # show legend next to plot
         ax3.legend(loc="center left", bbox_to_anchor=(1, 0.5), prop={'size': 8})
 
-        # # plot age and head circumference
-        # ax3.plot(age, head, color="green")
-        # ax3.grid(linestyle="--")
-        # ax3.set_title("Obwód głowy")
-        # ax3.set_xlabel("Wiek [miesiące]")
-        # ax3.set_ylabel("Obwód głowy [cm]")
-        # ax3.set_ylim(bottom=0)
-        # ax3.yaxis.set_major_locator(plt.MaxNLocator(integer=True))
-        # ax3.set_ylim(top=ax3.get_ylim()[1] * 1.2)
-
         # improve layout
         plt.tight_layout()
         # increase plot height
