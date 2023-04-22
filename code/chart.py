@@ -71,12 +71,12 @@ def create_charts(main):
         ax2 = fig.add_subplot(312)
         ax3 = fig.add_subplot(313)
 
+        ax1.plot(age, height, color="black", label="Wzrost")
         ax1.plot(age_centyl, height_2nd, 'r--', label="2nd")
         ax1.plot(age_centyl, height_25th, 'g--', label="25th")
         ax1.plot(age_centyl, height_50th, 'b-.', label="50th")
         ax1.plot(age_centyl, height_75th, 'g--', label="75th")
         ax1.plot(age_centyl, height_98th, 'r--', label="98th")
-        ax1.plot(age, height, color="black", label="Wzrost")
         ax1.grid(linestyle="--")
         ax1.set_xlim(left=0)
         ax1.set_xlim(right=max(age))
@@ -130,6 +130,7 @@ def create_charts(main):
         ax3.yaxis.set_major_locator(plt.MaxNLocator(integer=True))
         # show legend next to plot
         ax3.legend(loc="center left", bbox_to_anchor=(1, 0.5), prop={'size': 8})
+        fig.set_size_inches(5, 6)
 
         # improve layout
         plt.tight_layout()
