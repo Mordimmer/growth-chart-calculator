@@ -17,6 +17,8 @@ def create_charts(main):
     def draw_plot():
         # load data from csv file, and crate lists for each column
         data = pd.read_csv("data.csv")
+        # sort all data by second column (age)
+        data = data.sort_values(by=[data.columns[1]])
         gender = data.iloc[:, 0]
         age = data.iloc[:, 1]
         height = data.iloc[:, 2]
@@ -41,7 +43,7 @@ def create_charts(main):
             centyle_weight = pd.read_csv("centyle/b_weight.csv")
         else:
             centyle_weight = pd.read_csv("centyle/g_weight.csv")
-        # print last line contain gender
+
         age_centyl_weight = centyle_weight.iloc[:, 0]
         weight_2nd = centyle_weight.iloc[:, 1]
         weight_25th = centyle_weight.iloc[:, 4]
