@@ -19,7 +19,7 @@ if __name__ == "__main__":
 
     # setting up window size
     # main.geometry(f"{width}x{height}") # set window size to screen size
-    main.geometry("1100x800")  # set window size to 1200x800
+    main.geometry("1100x800")  # set window size to 1100x800
 
     # background color
     main.configure(bg=global_variables.background_color)  # setting background color`
