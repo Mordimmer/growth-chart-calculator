@@ -125,7 +125,7 @@ def create_charts(main):
         else:
             ax3.set_xlim(right=24)
             # change x axis label
-            ax3.set_xlabel("Wiek [miesiące]\n(nie liczony powyżej 2 roku życia)")
+            ax3.set_xlabel("Wiek [miesiące]\n(nieliczony powyżej 2. roku życia)")
 
         ax3.set_title("Obwód głowy")
         ax3.set_ylabel("Obwód głowy [cm]")
