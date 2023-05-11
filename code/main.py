@@ -1,6 +1,24 @@
 from ui import *
 import global_variables
 
+# Importing module
+import mysql.connector
+
+# Creating connection object
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password=""
+)
+
+# Printing the connection object
+print(mydb)
+
+# Creating an instance of 'cursor' class
+# which is used to execute the 'SQL'
+# statements in 'Python'
+cursor = mydb.cursor()
+
 if __name__ == "__main__":
     """
     Main function, create main window and call create_user_interface function
