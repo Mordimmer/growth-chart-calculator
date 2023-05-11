@@ -19,6 +19,7 @@ print(mydb)
 # statements in 'Python'
 cursor = mydb.cursor()
 
+
 if __name__ == "__main__":
     """
     Main function, create main window and call create_user_interface function
