@@ -1,24 +1,11 @@
+import tkinter
+
 from ui import *
 import global_variables
+from db_connection import *
 
 # Importing module
 import mysql.connector
-
-# Creating connection object
-mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password=""
-)
-
-# Printing the connection object
-print(mydb)
-
-# Creating an instance of 'cursor' class
-# which is used to execute the 'SQL'
-# statements in 'Python'
-cursor = mydb.cursor()
-
 
 if __name__ == "__main__":
     """
@@ -38,13 +25,13 @@ if __name__ == "__main__":
 
     # setting up window size
     # main.geometry(f"{width}x{height}") # set window size to screen size
-    main.geometry("1100x800")  # set window size to 1100x800
+    main.geometry("600x700")  # set window size to 1100x800
 
     # background color
     main.configure(bg=global_variables.background_color)  # setting background color`
 
-    create_user_interface(main)  # create user interface
-    create_charts(main)  # create charts
+    create_main_menu(main)
 
     # running main window
     main.mainloop()
+

@@ -1,5 +1,8 @@
+import tkinter
 import tkinter as tk
 
+import db_connection
+import global_variables
 from chart import create_charts
 
 
@@ -25,12 +28,14 @@ def create_user_interface(main):
 
     def append_data():
         """
-        Append data to file
+        Append data to database
         """
-        with open("data.csv", "a") as file:
-            file.write(
-                f"\n{selected_gender.get()}, {age_input.get()}, {height_input.get()}, {weight_input.get()},"
-                f" {head_input.get()}")
+        # with open("data.csv", "a") as file:
+        #     file.write(
+        #         f"\n{selected_gender.get()}, {age_input.get()}, {height_input.get()}, {weight_input.get()},"
+        #         f" {head_input.get()}")
+        db_connection.save_patients_data([global_variables.selected_pesel,
+                                          age_input.get(), height_input.get(), weight_input.get(), head_input.get()])
 
     def is_empty_or_not_number():
         """
@@ -39,7 +44,7 @@ def create_user_interface(main):
         """
         if age_input.get() == "" or height_input.get() == "" or weight_input.get() == "" or head_input.get() == "" \
                 or not is_number(age_input.get()) or not is_number(height_input.get()) or not is_number(
-                weight_input.get()) or not is_number(head_input.get()):
+            weight_input.get()) or not is_number(head_input.get()):
             return True
         else:
             return False
@@ -75,7 +80,7 @@ def create_user_interface(main):
             main.after(3000, success_label.destroy)
             # append data to file
             append_data()
-            create_charts(main)
+            create_charts(main, global_variables.selected_pesel)
 
     def change_button_state():
         """
@@ -91,28 +96,28 @@ def create_user_interface(main):
                                                                                        padx=10, pady=10)
 
     # create radio buttons, to select child's gender
-    selected_gender = tk.StringVar()
-    tk.Label(main, text="Płeć dziecka:", bg="#FFCC99").grid(row=1, column=0, padx=10, pady=10, columnspan=2)
-    tk.Radiobutton(main,
-                   text="Dziewczynka",
-                   value="girl",
-                   variable=selected_gender,
-                   bg="#FFCC99",
-                   highlightbackground="#FFCC99",
-                   activebackground="#e6ac73").grid(row=2,
-                                                    column=0,
-                                                    padx=10,
-                                                    pady=10)
-    tk.Radiobutton(main,
-                   text="Chłopczyk",
-                   value="boy",
-                   highlightbackground="#FFCC99",
-                   activebackground="#e6ac73",
-                   variable=selected_gender,
-                   bg="#FFCC99").grid(row=2,
-                                      column=1,
-                                      padx=10,
-                                      pady=10)
+    # selected_gender = tk.StringVar()
+    # tk.Label(main, text="Płeć dziecka:", bg="#FFCC99").grid(row=1, column=0, padx=10, pady=10, columnspan=2)
+    # tk.Radiobutton(main,
+    #                text="Dziewczynka",
+    #                value="girl",
+    #                variable=selected_gender,
+    #                bg="#FFCC99",
+    #                highlightbackground="#FFCC99",
+    #                activebackground="#e6ac73").grid(row=2,
+    #                                                 column=0,
+    #                                                 padx=10,
+    #                                                 pady=10)
+    # tk.Radiobutton(main,
+    #                text="Chłopczyk",
+    #                value="boy",
+    #                highlightbackground="#FFCC99",
+    #                activebackground="#e6ac73",
+    #                variable=selected_gender,
+    #                bg="#FFCC99").grid(row=2,
+    #                                   column=1,
+    #                                   padx=10,
+    #                                   pady=10)
 
     # create input fields
     tk.Label(main, text="Wiek [miesiące]:", bg="#FFCC99").grid(row=3, column=0, padx=10, pady=10, columnspan=2)
@@ -142,3 +147,82 @@ def create_user_interface(main):
     end_button = tk.Button(main, text="Zakończ", command=main.destroy)
     end_button.grid(row=13, column=0, padx=10, pady=10, columnspan=2)
 
+
+def create_main_menu(main):
+
+    def read_patients():
+        patient_list.delete(0, tk.END)
+        patients = db_connection.read_patients_from_base()
+        i = 1
+        for x in patients:
+            patient_list.insert(i, x[0] + "     " + x[1] + "     " + x[2])
+            i += 1
+
+    def add_patient():
+        db_connection.save_new_patient([pesel_input.get(), first_name_input.get(), name_input.get(),
+                                        selected_gender.get(), father_name_input.get(), mother_name_input.get()])
+        read_patients()
+
+    def change_to_patient():
+        selected = patient_list.get(patient_list.curselection())
+        global_variables.selected_patient_gender = db_connection.check_gender(selected.split()[0])
+        change_to_patient_view(selected.split()[0])
+
+    #todo poprawić to wizualnie
+
+    patient_list = tk.Listbox(main, width=40)
+    patient_list.pack()
+    read_patients()
+
+    go_to_patient_view_btn = tk.Button(main, text="Zobacz dane pacjenta", command=change_to_patient)
+    go_to_patient_view_btn.pack()
+
+    tk.Label(main, text="PESEL:", bg="#FFCC99").pack()
+    pesel_input = tk.Entry(main)
+    pesel_input.pack()
+
+    tk.Label(main, text="Imie:", bg="#FFCC99").pack()
+    first_name_input = tk.Entry(main)
+    first_name_input.pack()
+
+    tk.Label(main, text="Nazwisko:", bg="#FFCC99").pack()
+    name_input = tk.Entry(main)
+    name_input.pack()
+
+    tk.Label(main, text="Imię ojca:", bg="#FFCC99").pack()
+    father_name_input = tk.Entry(main)
+    father_name_input.pack()
+
+    tk.Label(main, text="Imię matki:", bg="#FFCC99").pack()
+    mother_name_input = tk.Entry(main)
+    mother_name_input.pack()
+
+    selected_gender = tk.StringVar()
+
+    tk.Radiobutton(main,
+                   text="Dziewczynka",
+                   value="girl",
+                   variable=selected_gender,
+                   bg="#FFCC99",
+                   highlightbackground="#FFCC99",
+                   activebackground="#e6ac73").pack()
+
+    tk.Radiobutton(main,
+                   text="Chłopczyk",
+                   value="boy",
+                   highlightbackground="#FFCC99",
+                   activebackground="#e6ac73",
+                   variable=selected_gender,
+                   bg="#FFCC99").pack()
+
+    add_patient_btn = tk.Button(main, text="Dodaj nowego pacjenta", command=add_patient)
+    add_patient_btn.pack()
+
+
+def change_to_patient_view(pesel: str):
+    global_variables.selected_pesel = pesel
+    window = tkinter.Toplevel()
+    window.configure(bg=global_variables.background_color)
+    window.geometry("1100x800")
+    create_user_interface(window)  # create user interface
+    create_charts(window, pesel)  # create charts

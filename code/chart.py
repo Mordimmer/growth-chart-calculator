@@ -3,20 +3,22 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
+import db_connection
 import global_variables
 
 
-def create_charts(main):
+def create_charts(main, pesel: str):
     """
     Create charts and show them in main window
 
-    :param main:
-    :return:
+    :param pesel: pesel of the patient to read data for
+    :param main: application window
     """
 
     def draw_plot():
         # load data from csv file, and crate lists for each column
-        data = pd.read_csv("data.csv")
+        # data = pd.read_csv("data.csv")
+        data = db_connection.read_patient_data(pesel)
         # sort all data by second column (age)
         data = data.sort_values(by=[data.columns[1]])
         gender = data.iloc[:, 0]
@@ -24,11 +26,13 @@ def create_charts(main):
         height = data.iloc[:, 2]
         weight = data.iloc[:, 3]
         head = data.iloc[:, 4]
+        print(height)
 
         # converse age to int
         age = [int(i) for i in age]
 
-        if data.tail(1).iloc[0, 0] == "boy":
+        # if data.tail(1).iloc[0, 0] == "boy":
+        if global_variables.selected_patient_gender == "boy":
             centyle_height = pd.read_csv("centyle/b_height.csv")
         else:
             centyle_height = pd.read_csv("centyle/g_height.csv")
@@ -39,7 +43,7 @@ def create_charts(main):
         height_75th = centyle_height.iloc[:, 6]
         height_98th = centyle_height.iloc[:, 9]
 
-        if data.tail(1).iloc[0, 0] == "boy":
+        if global_variables.selected_patient_gender == "boy":
             centyle_weight = pd.read_csv("centyle/b_weight.csv")
         else:
             centyle_weight = pd.read_csv("centyle/g_weight.csv")
@@ -51,7 +55,7 @@ def create_charts(main):
         weight_75th = centyle_weight.iloc[:, 6]
         weight_98th = centyle_weight.iloc[:, 9]
 
-        if data.tail(1).iloc[0, 0] == "boy":
+        if global_variables.selected_patient_gender == "boy":
             centyle_headc = pd.read_csv("centyle/b_headc.csv")
         else:
             centyle_headc = pd.read_csv("centyle/g_headc.csv")
@@ -81,9 +85,17 @@ def create_charts(main):
         ax1.plot(age_centyl, height_98th, 'r--', label="98th")
         ax1.grid(linestyle="--")
         ax1.set_xlim(left=0)
-        ax1.set_xlim(right=max(age))
-        ax1.set_ylim(bottom=min(height) - 0.1*min(height))
-        ax1.set_ylim(top=max(height) + 0.1*max(height))
+        if len(age) > 0:
+            ax1.set_xlim(right=max(age))
+        else:
+            ax1.set_xlim(right=24)
+        if len(height) > 0:
+            ax1.set_ylim(bottom=min(height) - 0.1 * min(height))
+            ax1.set_ylim(top=max(height) + 0.1 * max(height))
+        else:
+            ax1.set_ylim(0)
+            ax1.set_ylim(40)
+
         ax1.set_title("Wzrost")
         ax1.set_xlabel("Wiek [miesiące]")
         ax1.set_ylabel("Wzrost [cm]")
@@ -99,10 +111,11 @@ def create_charts(main):
         ax2.plot(age_centyl_weight, weight_75th, 'g--', label="75th")
         ax2.plot(age_centyl_weight, weight_98th, 'r--', label="98th")
         ax2.grid(linestyle="--")
+        #todo zmienić limity
         ax2.set_xlim(left=0)
         ax2.set_xlim(right=max(age))
-        ax2.set_ylim(bottom=min(weight) - 0.1*min(weight))
-        ax2.set_ylim(top=max(weight) + 0.1*max(weight))
+        ax2.set_ylim(bottom=min(weight) - 0.1 * min(weight))
+        ax2.set_ylim(top=max(weight) + 0.1 * max(weight))
         ax2.set_title("Waga")
         ax2.set_xlabel("Wiek [miesiące]:")
         ax2.set_ylabel("Waga [kg]")
@@ -118,6 +131,7 @@ def create_charts(main):
         ax3.plot(age_centyl_headc, headc_75th, 'g--', label="75th")
         ax3.plot(age_centyl_headc, headc_98th, 'r--', label="98th")
         ax3.grid(linestyle="--")
+        #todo zmienić limity -> chcemy sprawdzać, czy wielkość zbioru danych, z którego czerpiemy jest większa od 0
         ax3.set_xlim(left=0)
         if max(age) < 24:
             ax3.set_xlim(right=max(age))
@@ -125,7 +139,7 @@ def create_charts(main):
         else:
             ax3.set_xlim(right=24)
             # change x axis label
-            ax3.set_xlabel("Wiek [miesiące]\n(nieliczony powyżej 2. roku życia)")
+            ax3.set_xlabel("Wiek [miesiące]\n(nie liczony powyżej 2 roku życia)")
 
         ax3.set_title("Obwód głowy")
         ax3.set_ylabel("Obwód głowy [cm]")
