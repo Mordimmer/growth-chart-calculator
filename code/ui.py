@@ -92,32 +92,12 @@ def create_user_interface(main):
     # button to change butt appending data state to enabled
     change_button_state_button = tk.Button(main, text="Wprowadź kolejne dane", command=change_button_state)
 
-    tk.Label(main, text="Kalkulator centylowy", bg="#FFCC99", font=("Arial", 30)).grid(row=0, column=0, columnspan=2,
+    tk.Label(main, text="      Kalkulator centylowy", bg="#FFCC99", font=("Arial", 30)).grid(row=1, column=0, columnspan=2,
                                                                                        padx=10, pady=10)
 
-    # create radio buttons, to select child's gender
-    # selected_gender = tk.StringVar()
-    # tk.Label(main, text="Płeć dziecka:", bg="#FFCC99").grid(row=1, column=0, padx=10, pady=10, columnspan=2)
-    # tk.Radiobutton(main,
-    #                text="Dziewczynka",
-    #                value="girl",
-    #                variable=selected_gender,
-    #                bg="#FFCC99",
-    #                highlightbackground="#FFCC99",
-    #                activebackground="#e6ac73").grid(row=2,
-    #                                                 column=0,
-    #                                                 padx=10,
-    #                                                 pady=10)
-    # tk.Radiobutton(main,
-    #                text="Chłopczyk",
-    #                value="boy",
-    #                highlightbackground="#FFCC99",
-    #                activebackground="#e6ac73",
-    #                variable=selected_gender,
-    #                bg="#FFCC99").grid(row=2,
-    #                                   column=1,
-    #                                   padx=10,
-    #                                   pady=10)
+    # tk.Label(main, text="      Kalkulator centylowy", bg="#FFCC99", font=("Arial", 30)).grid(row=1, column=0,
+    #                                                                                          columnspan=2,
+    #                                                                                          padx=10, pady=10)
 
     # create input fields
     tk.Label(main, text="Wiek [miesiące]:", bg="#FFCC99").grid(row=3, column=0, padx=10, pady=10, columnspan=2)
@@ -163,66 +143,92 @@ def create_main_menu(main):
                                         selected_gender.get(), father_name_input.get(), mother_name_input.get()])
         read_patients()
 
+    # todo
+    # def delete_patient():
+    #      db_connection.delete_patient([pesel_input.get(), first_name_input.get(), name_input.get()])  # ,
+    #                                     selected_gender.get(), father_name_input.get(), mother_name_input.get()])
+
+    def delete_patient():
+        selected_patient = patient_list.get(patient_list.curselection())
+        db_connection.delete_patient(selected_patient[0])
+        read_patients()
+
     def change_to_patient():
         selected = patient_list.get(patient_list.curselection())
         global_variables.selected_patient_gender = db_connection.check_gender(selected.split()[0])
         change_to_patient_view(selected.split()[0])
 
-    #todo poprawić to wizualnie
+    tk.Label(main, text="                Kalkulator centylowy   ", bg="#FFCC99", font=("Arial", 30)).grid(row=0, column=1, columnspan=2,
+                                                                                         padx=15, pady=10)
 
-    patient_list = tk.Listbox(main, width=40)
-    patient_list.pack()
+    tk.Label(main, text="  Baza użytkowników:", bg="#FFCC99", font=("Arial", 24)).grid(row=1, column=0, columnspan=2,
+                                                                                         padx=10, pady=10)
+
+    tk.Label(main, text="     Dodaj nowe dziecko:", bg="#FFCC99", font=("Arial", 24)).grid(row=1, column=2, columnspan=2,
+                                                                                  padx=10, pady=10)
+
+    patient_list = tk.Listbox(main, width=45)
+    patient_list.grid(row=2, column=0, padx=10, pady=10, columnspan=2, rowspan=3)
     read_patients()
 
-    go_to_patient_view_btn = tk.Button(main, text="Zobacz dane pacjenta", command=change_to_patient)
-    go_to_patient_view_btn.pack()
+    go_to_patient_view_btn = tk.Button(main, text="Zobacz dane dziecka", command=change_to_patient)
+    go_to_patient_view_btn.grid(row=5, column=0, padx=10, pady=10, columnspan=2)
 
-    tk.Label(main, text="PESEL:", bg="#FFCC99").pack()
-    pesel_input = tk.Entry(main)
-    pesel_input.pack()
-
-    tk.Label(main, text="Imie:", bg="#FFCC99").pack()
-    first_name_input = tk.Entry(main)
-    first_name_input.pack()
-
-    tk.Label(main, text="Nazwisko:", bg="#FFCC99").pack()
-    name_input = tk.Entry(main)
-    name_input.pack()
-
-    tk.Label(main, text="Imię ojca:", bg="#FFCC99").pack()
-    father_name_input = tk.Entry(main)
-    father_name_input.pack()
-
-    tk.Label(main, text="Imię matki:", bg="#FFCC99").pack()
-    mother_name_input = tk.Entry(main)
-    mother_name_input.pack()
+    # todo
+    delete_patient_btn = tk.Button(main, text="Usuń użytkownika", command=delete_patient)
+    delete_patient_btn.grid(row=6, column=0, padx=10, pady=10, columnspan=2)
 
     selected_gender = tk.StringVar()
 
+    tk.Label(main, text="   Płeć dziecka:", bg="#FFCC99", font=("Arial", 16)).grid(row=2, column=2, padx=10, pady=10,
+                                                                                   columnspan=2)
     tk.Radiobutton(main,
                    text="Dziewczynka",
                    value="girl",
                    variable=selected_gender,
                    bg="#FFCC99",
                    highlightbackground="#FFCC99",
-                   activebackground="#e6ac73").pack()
+                   activebackground="#e6ac73",
+                   font=("Arial", 10)).grid(row=3, column=2, padx=0, pady=10)
 
     tk.Radiobutton(main,
                    text="Chłopczyk",
                    value="boy",
+                   variable=selected_gender,
+                   bg="#FFCC99",
                    highlightbackground="#FFCC99",
                    activebackground="#e6ac73",
-                   variable=selected_gender,
-                   bg="#FFCC99").pack()
+                   font=("Arial", 10)).grid(row=3, column=3, padx=0, pady=10)
 
-    add_patient_btn = tk.Button(main, text="Dodaj nowego pacjenta", command=add_patient)
-    add_patient_btn.pack()
+
+    tk.Label(main, text="PESEL:", bg="#FFCC99").grid(row=4, column=2, padx=10, pady=10, columnspan=2)
+    pesel_input = tk.Entry(main)
+    pesel_input.grid(row=5, column=2, padx=10, pady=10, columnspan=2)
+
+    tk.Label(main, text="Imie:", bg="#FFCC99").grid(row=6, column=2, padx=10, pady=10, columnspan=2)
+    first_name_input = tk.Entry(main)
+    first_name_input.grid(row=7, column=2, padx=10, pady=10, columnspan=2)
+
+    tk.Label(main, text="Nazwisko:", bg="#FFCC99").grid(row=8, column=2, padx=10, pady=10, columnspan=2)
+    name_input = tk.Entry(main)
+    name_input.grid(row=9, column=2, padx=10, pady=10, columnspan=2)
+
+    tk.Label(main, text="Imię ojca:", bg="#FFCC99").grid(row=10, column=2, padx=10, pady=10, columnspan=2)
+    father_name_input = tk.Entry(main)
+    father_name_input.grid(row=11, column=2, padx=10, pady=10, columnspan=2)
+
+    tk.Label(main, text="Imię matki:", bg="#FFCC99").grid(row=12, column=2, padx=10, pady=10, columnspan=2)
+    mother_name_input = tk.Entry(main)
+    mother_name_input.grid(row=13, column=2, padx=10, pady=10, columnspan=2)
+
+    add_patient_btn = tk.Button(main, text="Dodaj nowe dziecko", command=add_patient)
+    add_patient_btn.grid(row=15, column=2, padx=10, pady=10, columnspan=2)
 
 
 def change_to_patient_view(pesel: str):
     global_variables.selected_pesel = pesel
     window = tkinter.Toplevel()
     window.configure(bg=global_variables.background_color)
-    window.geometry("1100x800")
+    window.geometry("1100x850")
     create_user_interface(window)  # create user interface
     create_charts(window, pesel)  # create charts

@@ -93,8 +93,8 @@ def create_charts(main, pesel: str):
             ax1.set_ylim(bottom=min(height) - 0.1 * min(height))
             ax1.set_ylim(top=max(height) + 0.1 * max(height))
         else:
-            ax1.set_ylim(0)
-            ax1.set_ylim(40)
+            ax1.set_ylim(bottom=40)
+            ax1.set_ylim(top=100)
 
         ax1.set_title("Wzrost")
         ax1.set_xlabel("Wiek [miesiące]")
@@ -111,13 +111,26 @@ def create_charts(main, pesel: str):
         ax2.plot(age_centyl_weight, weight_75th, 'g--', label="75th")
         ax2.plot(age_centyl_weight, weight_98th, 'r--', label="98th")
         ax2.grid(linestyle="--")
-        #todo zmienić limity
         ax2.set_xlim(left=0)
-        ax2.set_xlim(right=max(age))
-        ax2.set_ylim(bottom=min(weight) - 0.1 * min(weight))
-        ax2.set_ylim(top=max(weight) + 0.1 * max(weight))
+
+        if len(age) > 0:
+            ax2.set_xlim(right=max(age))
+        else:
+            ax2.set_xlim(right=24)
+        # ax2.set_xlim(left=0)
+        # ax2.set_xlim(right=max(age))
+
+        if len(weight) > 0:
+            ax2.set_ylim(bottom=min(weight) - 0.1 * min(weight))
+            ax2.set_ylim(top=max(weight) + 0.1 * max(weight))
+        else:
+            ax2.set_ylim(bottom=0)
+            ax2.set_ylim(top=17)
+        # ax2.set_ylim(bottom=min(weight) - 0.1 * min(weight))
+        # ax2.set_ylim(top=max(weight) + 0.1 * max(weight))
+
         ax2.set_title("Waga")
-        ax2.set_xlabel("Wiek [miesiące]:")
+        ax2.set_xlabel("Wiek [miesiące]")
         ax2.set_ylabel("Waga [kg]")
         ax2.yaxis.set_major_locator(plt.MaxNLocator(integer=True))
         # show legend next to plot
@@ -131,15 +144,18 @@ def create_charts(main, pesel: str):
         ax3.plot(age_centyl_headc, headc_75th, 'g--', label="75th")
         ax3.plot(age_centyl_headc, headc_98th, 'r--', label="98th")
         ax3.grid(linestyle="--")
-        #todo zmienić limity -> chcemy sprawdzać, czy wielkość zbioru danych, z którego czerpiemy jest większa od 0
         ax3.set_xlim(left=0)
-        if max(age) < 24:
-            ax3.set_xlim(right=max(age))
-            ax3.set_xlabel("Wiek [miesiące]:")
+        if len(age) > 0:
+            if 24 > max(age) > 0:
+                ax3.set_xlim(right=max(age))
+                ax3.set_xlabel("Wiek [miesiące]")
+            else:
+                ax3.set_xlim(right=24)
+                # change x axis label
+                ax3.set_xlabel("Wiek [miesiące]\n(nie liczony powyżej 2 roku życia)")
         else:
             ax3.set_xlim(right=24)
-            # change x axis label
-            ax3.set_xlabel("Wiek [miesiące]\n(nie liczony powyżej 2 roku życia)")
+            ax3.set_xlabel("Wiek [miesiące]")
 
         ax3.set_title("Obwód głowy")
         ax3.set_ylabel("Obwód głowy [cm]")

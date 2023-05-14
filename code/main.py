@@ -1,4 +1,4 @@
-import tkinter
+import tkinter as tk
 
 from ui import *
 import global_variables
@@ -23,9 +23,23 @@ if __name__ == "__main__":
     width = main.winfo_screenwidth()
     height = main.winfo_screenheight()
 
-    # setting up window size
+    # setting up first window size
     # main.geometry(f"{width}x{height}") # set window size to screen size
-    main.geometry("600x700")  # set window size to 1100x800
+    # main.geometry("740x800")  # set window size to 1100x800
+
+    #making window in center
+    # Uzyskanie wymiarów ekranu
+    screen_width = main.winfo_screenwidth()
+    screen_height = main.winfo_screenheight()
+
+    # Ustalenie wymiarów okna i pozycji, aby wyśrodkować okno
+    window_width = 730
+    window_height = 780
+    x_pos = (screen_width // 2) - (window_width // 2)
+    y_pos = (screen_height // 2) - (window_height // 2)
+
+    # Ustawienie pozycji okna
+    main.geometry(f"{window_width}x{window_height}+{x_pos}+{y_pos}")
 
     # background color
     main.configure(bg=global_variables.background_color)  # setting background color`

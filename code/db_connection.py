@@ -34,9 +34,22 @@ def save_new_patient(info: list):
     mydb.commit()
 
 
+# todo
+# def delete_patient(info: list):
+#     # assuming list format: (pesel, imie, nazwisko, płeć, imia_ojca, imie_matki)
+#     query = "DELETE FROM pacjent VALUES (%s,%s,%s)"
+#     cursor.execute(query, info)
+#     mydb.commit()
+
+def delete_patient(pesel):
+    query = "DELETE FROM pacjent WHERE pesel=%s"
+    cursor.execute(query, (pesel,))
+    mydb.commit()
+
+
 def save_patients_data(data: list):
     # assuming list format: (pesel, wiek, wysokosc, waga, obwód głowy)
-    query = "INSERT INTO siatka_centylowa (`pesel`, `wiek[miesiace]`, `wysokosc[cm]`, `waga[kg]`, `obwod_glowy[cm]`)"\
+    query = "INSERT INTO siatka_centylowa (`pesel`, `wiek[miesiace]`, `wysokosc[cm]`, `waga[kg]`, `obwod_glowy[cm]`)" \
             "VALUES (%s, %s, %s, %s, %s)"
     cursor.execute(query, data)
     mydb.commit()
