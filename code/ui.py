@@ -143,7 +143,7 @@ def create_main_menu(main):
                                         selected_gender.get(), father_name_input.get(), mother_name_input.get()])
         read_patients()
 
-    # todo
+    # todo nie dziala
     # def delete_patient():
     #      db_connection.delete_patient([pesel_input.get(), first_name_input.get(), name_input.get()])  # ,
     #                                     selected_gender.get(), father_name_input.get(), mother_name_input.get()])
