@@ -34,17 +34,20 @@ def save_new_patient(info: list):
     mydb.commit()
 
 
-# todo
-# def delete_patient(info: list):
-#     # assuming list format: (pesel, imie, nazwisko, płeć, imia_ojca, imie_matki)
-#     query = "DELETE FROM pacjent VALUES (%s,%s,%s)"
-#     cursor.execute(query, info)
-#     mydb.commit()
-
 def delete_patient(pesel):
-    query = "DELETE FROM pacjent WHERE pesel=%s"
-    cursor.execute(query, (pesel,))
+    cursor1 = mydb.cursor()
+
+    # Delete rows from siatka_centylowa table first
+    query1 = "DELETE FROM siatka_centylowa WHERE pesel = %s"
+    cursor1.execute(query1, [pesel])
     mydb.commit()
+
+    # Then delete row from pacjent table
+    query2 = "DELETE FROM pacjent WHERE pesel = %s"
+    cursor1.execute(query2, [pesel])
+    mydb.commit()
+
+    cursor1.close()
 
 
 def save_patients_data(data: list):

@@ -143,15 +143,11 @@ def create_main_menu(main):
                                         selected_gender.get(), father_name_input.get(), mother_name_input.get()])
         read_patients()
 
-    # todo nie dziala
-    # def delete_patient():
-    #      db_connection.delete_patient([pesel_input.get(), first_name_input.get(), name_input.get()])  # ,
-    #                                     selected_gender.get(), father_name_input.get(), mother_name_input.get()])
-
     def delete_patient():
         selected_patient = patient_list.get(patient_list.curselection())
-        db_connection.delete_patient(selected_patient[0])
+        db_connection.delete_patient(selected_patient[0:11])
         read_patients()
+        print(selected_patient[0:11])
 
     def change_to_patient():
         selected = patient_list.get(patient_list.curselection())
@@ -174,7 +170,6 @@ def create_main_menu(main):
     go_to_patient_view_btn = tk.Button(main, text="Zobacz dane dziecka", command=change_to_patient)
     go_to_patient_view_btn.grid(row=5, column=0, padx=10, pady=10, columnspan=2)
 
-    # todo
     delete_patient_btn = tk.Button(main, text="Usuń użytkownika", command=delete_patient)
     delete_patient_btn.grid(row=6, column=0, padx=10, pady=10, columnspan=2)
 
