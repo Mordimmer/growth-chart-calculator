@@ -152,7 +152,7 @@ def create_charts(main, pesel: str):
             else:
                 ax3.set_xlim(right=24)
                 # change x axis label
-                ax3.set_xlabel("Wiek [miesiące]\n(nie liczony powyżej 2 roku życia)")
+                ax3.set_xlabel("Wiek [miesiące]\n(nieliczony powyżej 2. roku życia)")
         else:
             ax3.set_xlim(right=24)
             ax3.set_xlabel("Wiek [miesiące]")

@@ -95,7 +95,7 @@ def create_user_interface(main):
     tk.Label(main, text="      Kalkulator centylowy", bg="#FFCC99", font=("Arial", 30)).grid(row=1, column=0, columnspan=2,
                                                                                        padx=10, pady=10)
 
-    # tk.Label(main, text="      Kalkulator centylowy", bg="#FFCC99", font=("Arial", 30)).grid(row=1, column=0,
+    # tk.Label(main, text=global_variables.imie_nazwisko_pacjenta, bg="#FFCC99", font=("Arial", 30)).grid(row=2, column=0,
     #                                                                                          columnspan=2,
     #                                                                                          padx=10, pady=10)
 
@@ -147,12 +147,21 @@ def create_main_menu(main):
         selected_patient = patient_list.get(patient_list.curselection())
         db_connection.delete_patient(selected_patient[0:11])
         read_patients()
-        print(selected_patient[0:11])
+        # print(selected_patient[0:11])
+        # print(selected_patient[16:len(selected_patient)])
 
     def change_to_patient():
         selected = patient_list.get(patient_list.curselection())
         global_variables.selected_patient_gender = db_connection.check_gender(selected.split()[0])
         change_to_patient_view(selected.split()[0])
+        # global_variables.imie_nazwisko_pacjenta = selected[14:len(selected)]
+        # print(global_variables.imie_nazwisko_pacjenta)
+
+    # tk.Label(main, text=global_variables.imie_nazwisko_pacjenta, bg="#FFCC99", font=("Arial", 30)).grid(row=0,
+    #                                                                                                     column=1,
+    #                                                                                                     columnspan=2,
+    #                                                                                                     padx=15,
+    #                                                                                                     pady=10)
 
     tk.Label(main, text="                Kalkulator centylowy   ", bg="#FFCC99", font=("Arial", 30)).grid(row=0, column=1, columnspan=2,
                                                                                          padx=15, pady=10)
